@@ -1,13 +1,29 @@
 package itumulator.simulator;
 
+import itumulator.world.Location;
 import itumulator.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * By implementing the {@link Actor} interface and adding an instance of such a class to a {@link World} will make the simulation call the
  * {@link act(World world) act} method during each step of the simulation. 
  */
 public interface Actor {
-    
+
+    static Location getRandomEmptyLocation(Random rng, World world) {
+        return getRandomEmptyLocation(world.getCurrentLocation(), rng, world);
+    }
+
+    static Location getRandomEmptyLocation(Location loc, Random rng, World world) {
+        List<Location> locations = new ArrayList<>(world.getEmptySurroundingTiles(loc));
+        var pos = rng.nextInt(locations.size());
+        Location target = locations.get(pos);
+        return target;
+    }
+
     /**
      * The method called whenever the actor needs to simulate actions. The worlds 'current location' is only set at the time when the method is called.
      * Thus, if you use setTile, remove, or delete, the current position does not automatically update. This has multiple implications, e.g.,  if you want to use {@link World#getSurroundingTiles}  after

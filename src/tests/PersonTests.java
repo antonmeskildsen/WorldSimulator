@@ -18,7 +18,7 @@ public class PersonTests {
     }
 
     public void personMovesDuringDay() {
-        var p = new Person();
+        var p = new Person(0);
         var i = new Location(0, 0);
 
         w.setDay();
